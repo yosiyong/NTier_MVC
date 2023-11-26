@@ -120,4 +120,7 @@
   <data name="Home Page" xml:space="preserve">
     <value>ホーム</value>
   </data>
+  <data name="Welcome" xml:space="preserve">
+    <value>ようこそ</value>
+  </data>
 </root>

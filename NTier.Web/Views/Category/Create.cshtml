@@ -1,0 +1,29 @@
+﻿@inject IViewLocalizer Localizer
+
+<form method="post">
+
+    <div class="border p-3 mt-4">
+        <div class="row pb-2">
+            <h2 class="text-primary">@Localizer["Create Category"]</h2>
+            <hr />
+        </div>
+        <div class="mb-3">
+            <label>@Localizer["Category Name"]</label>
+            <input type="text" class="form-control" />
+        </div>
+        <div class="mb-3">
+            <label>@Localizer["Display Order"]</label>
+            <input type="text" class="form-control" />
+        </div>
+        <div class="row">
+            <div class="col-6 col-md-3">
+                <button type="submit" class="btn btn-primary form-control">@Localizer["Create"]</button>
+            </div>
+            <div class="col-6 col-md-3">
+                <a asp-page="/categories/index" class="btn btn-secondary border  form-control">
+                    @Localizer["Back to List"]
+                </a>
+            </div>
+        </div>
+    </div>
+</form>
