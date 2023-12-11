@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+using NTier.Web;
 using NTier.Web.Data;
 using System.Globalization;
 
@@ -10,11 +12,18 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>options.UseSqlServ
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
+
 builder.Services.AddMvc()
     .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
     .AddDataAnnotationsLocalization();
 
-builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
+//builder.Services.AddMvc()
+//    .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
+//    .AddDataAnnotationsLocalization(options => {
+//        options.DataAnnotationLocalizerProvider = (type, factory) =>
+//            factory.Create(typeof(SharedResource));
+//    });
 
 builder.Services.Configure<RequestLocalizationOptions>(options =>
 {
@@ -26,7 +35,6 @@ builder.Services.Configure<RequestLocalizationOptions>(options =>
 
 var app = builder.Build();
 
-app.UseRequestLocalization();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -40,6 +48,9 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+var localizationOptions = app.Services.GetService<IOptions<RequestLocalizationOptions>>();
+app.UseRequestLocalization(localizationOptions.Value);
 
 app.UseAuthorization();
 
